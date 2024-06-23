@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Entraste a la tienda</h1>
+    <br />
+    <a href=" {% url "tienda:create" %}">Crear articulo</a>
+    <br>
+    {% for post in posts %}
+    <a href="{% url "tienda:detail" post.id %}">{{post.title}}</a>
+    {% endfor %}
+
+{% endblock content %}  

@@ -1,0 +1,15 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{post.title}}</h1>
+<br>
+{{post.content}}
+<br>
+<a href="{% url "tienda:update" post.id %}">editar</a>
+<a href="{% url "tienda:delete" post.id %}">eliminar</a>
+<br>
+<a href="{% url "tienda:home" %}">atras</a>
+
+{% endblock content %}     
