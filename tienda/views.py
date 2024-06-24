@@ -23,16 +23,11 @@ class BlogCreateView(View):
         return render(request, "blog_create.html", context)
 
     def post(self, request, *args, **kwargs):
-        if request.method == "POST":
-            form = PostCreateForm(request.POST)
-            if form.is_valid():
-                title = form.cleaned_data.get("title")
-                content = form.cleaned_data.get("content")
-
-                p, created = Post.objects.get_or_create(title=title, content=content)
-                p.save()
-                return redirect("tienda:home")
-        context = {}
+        form = PostCreateForm(request.POST, request.FILES)  # Incluye request.FILES
+        if form.is_valid():
+            form.save()
+            return redirect("tienda:home")
+        context = {"form": form}
         return render(request, "blog_create.html", context)
 
 
@@ -45,7 +40,7 @@ class BlogDetailView(View):
 
 class BlogUpdateView(UpdateView):
     model = Post
-    fields = ["title", "content"]
+    fields = ["title", "content", "marca", "sub_title", "img", "price", "amount"]
     template_name = "blog_update.html"
 
     def get_success_url(self):

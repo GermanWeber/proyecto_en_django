@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "tienda",
     "tailwind",
     "theme",
+    "media",
 ]
 
 TAILWIND_APP_NAME = "theme"
@@ -41,6 +42,23 @@ TAILWIND_APP_NAME = "theme"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+# Directorio base de tu proyecto
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# URL para acceder a los archivos de medios
+MEDIA_URL = "media/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# Configuración para servir archivos estáticos (puede ya estar configurado)
+STATIC_URL = "/static/"
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
@@ -123,7 +141,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
