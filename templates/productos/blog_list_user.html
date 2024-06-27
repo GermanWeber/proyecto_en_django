@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Contenedor principal -->
+<div class="container mx-auto mt-8 p-6 bg-gray-100 shadow-md rounded-lg">
+
+    <!-- Botón para crear un nuevo artículo -->
+    <div class="text-right mb-6">
+        <a href="{% url 'tienda:create' %}">
+            <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Crear Nuevo Artículo
+            </button>
+        </a>
+    </div>
+
+    <!-- Bucle para mostrar los posts -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for post in posts %}
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <a href="{% url 'tienda:detail' post.id %}">
+                <div class="md:flex">
+                    
+                    <!-- Muestra la imagen del post -->
+                    <div class="md:shrink-0">
+                        {% if post.img %}
+                        <img class="h-48 w-full object-cover md:h-full md:w-48" src="{{ post.img.url }}" alt="Imagen de {{ post.title }}">
+                        {% else %}
+                        <img class="h-48 w-full object-cover md:h-full md:w-48" src="{% static 'default_image.jpg' %}" alt="Imagen por defecto">
+                        {% endif %}
+                    </div>
+
+                    <!-- Información del post -->
+                    <div class="p-6">
+                        <h3 class="text-lg leading-tight font-semibold text-indigo-600">{{ post.title }}</h3>
+                        <p class="block mt-1 text-base leading-tight font-medium text-black hover:underline">{{ post.sub_title }}</p>
+                        <p class="mt-2 text-gray-600">{{ post.content|truncatewords:20 }}</p> <!-- Truncate words to keep it concise -->
+                    </div>
+
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Mensaje en caso de que no haya posts -->
+    {% if not posts %}
+    <p class="text-center text-gray-600 mt-8">No tienes publicaciones.</p>
+    {% endif %}
+    
+</div>
+
+{% endblock content %}

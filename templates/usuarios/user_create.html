@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto mt-8 p-6 bg-white shadow-md rounded-lg">
+    <h2 class="text-3xl font-bold mb-6">Registro</h2>
+
+    <form action="" method="POST" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+        
+        <!-- Campo de nombre -->
+        <div class="mb-4">
+            <label for="id_username" class="block text-lg font-semibold text-gray-700 mb-2">Nombre de Usuario:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <p class="text-red-500 text-xs italic">{{ form.username.errors }}</p>
+            {% endif %}
+        </div>
+        
+        <!-- Campo de email -->
+        <div class="mb-4">
+            <label for="id_email" class="block text-lg font-semibold text-gray-700 mb-2">Email:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <p class="text-red-500 text-xs italic">{{ form.email.errors }}</p>
+            {% endif %}
+        </div>
+        
+        <!-- Campo de password1 -->
+        <div class="mb-4">
+            <label for="id_password1" class="block text-lg font-semibold text-gray-700 mb-2">Contraseña:</label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+                <p class="text-red-500 text-xs italic">{{ form.password1.errors }}</p>
+            {% endif %}
+        </div>
+
+         <!-- Campo de password2 -->
+        <div class="mb-4">
+            <label for="id_password2" class="block text-lg font-semibold text-gray-700 mb-2">Confirmar Contraseña:</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+                <p class="text-red-500 text-xs italic">{{ form.password2.errors }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="flex justify-between items-center">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Crear Usuario</button>
+            <a href="{% url 'tienda:home' %}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">Atrás</a>
+        </div>
+    </form>
+</div>  
+{% endblock content %}
