@@ -81,7 +81,7 @@ class BlogUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_success_url(self):
         pk = self.kwargs["pk"]
-        return reverse_lazy("tienda:detail", kwargs={"pk": pk})
+        return reverse_lazy("tienda:detailUser", kwargs={"pk": pk})
 
     def test_func(self):
         post = self.get_object()
