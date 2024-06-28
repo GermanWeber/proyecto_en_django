@@ -155,48 +155,26 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
 
-def agregar_al_carro(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    if request.method == "POST":
-        form = CompraCreateForm(request.POST)
-        if form.is_valid():
-            compra = form.save(commit=False)
-            compra.usuarioID = request.user
-            compra.postID = post
-            compra.nombreCompra = post.title
-            compra.precioCompra = post.price
-            compra.save()
+@login_required
+def agregar_a_compra(request, post_id):
+    # Obtener el usuario actual
+    usuario = request.user
 
-    else:
-        form = CompraCreateForm()
-    return render(request, "productos\\blog_detail.html", {"form": form, "post": post})
+    try:
+        # Obtener el post por su id
+        post = Post.objects.get(pk=post_id)
 
-    # @login_required
-    # def ver_carro(request):
-    #     compras = Compra.objects.filter(usuarioID=request.user)
-    #     total_precio = sum(compra.precioCompra for compra in compras)
-    #     return render(
-    #         request,
-    #         "productos/ver_carro.html",
-    #         {"compras": compras, "total_precio": total_precio},
-    #     )
+        # Crear un objeto Compra
+        nueva_compra = Compra(
+            nombreCompra=post.title,
+            precioCompra=post.price,
+            usuarioID=usuario,
+            postID=post,
+        )
+        nueva_compra.save()
 
-    # @login_required
-    # def procesar_compra(request):
-    #     compras = Compra.objects.filter(usuarioID=request.user)
-    #     if request.method == "POST":
-    #         # Aquí podrías agregar la lógica para procesar el pago
-    #         # y actualizar el estado de las compras si es necesario.
-    #         compras.delete()  # Vacía el carrito después de la compra
-    #         return redirect("historial_compras")
-    #     total_precio = sum(compra.precioCompra for compra in compras)
-    #     return render(
-    #         request,
-    #         "productos/procesar_compra.html",
-    #         {"compras": compras, "total_precio": total_precio},
-    #     )
+        messages.success(request, "El artículo se ha agregado a tu compra.")
+    except Post.DoesNotExist:
+        messages.error(request, "El artículo no existe.")
 
-    # @login_required
-    # def historial_compras(request):
-    #     compras = Compra.objects.filter(usuarioID=request.user)
-    #     return render(request, "productos/historial_compras.html", {"compras": compras})
+    return redirect("tienda:home")

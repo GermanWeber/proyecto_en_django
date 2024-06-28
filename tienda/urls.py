@@ -30,8 +30,6 @@ urlpatterns = [
     path("<int:pk>/user-update/", UserUpdateView.as_view(), name="userUpdate"),
     path("<int:user_id>/tus-post/", TusProductos.as_view(), name="tusPost"),
     path(
-        "carrito/agregar/<int:post_id>/",
-        views.agregar_al_carro,
-        name="agregar_al_carro",
+        "agregar_compra/<int:post_id>/", views.agregar_a_compra, name="agregar_compra"
     ),
 ]
