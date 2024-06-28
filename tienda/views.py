@@ -233,9 +233,11 @@ class VerCarro(View):
 
         # Calcular el precio total
         total_precio = sum(compra.precioCompra for compra in compras)
+        total_compra = compras.count()
 
         context = {
             "compras": compras,
             "total_precio": total_precio,
+            "total_compra": total_compra,
         }
         return render(request, "productos/carro_compra.html", context)

@@ -8,27 +8,40 @@
     {% if not compras %}
         <p class="text-center text-gray-600 mt-8">No tienes nada en el carro</p>
     {% else %}
+
+    {% if total_compra == 1 %}       
+        <h2 class="text-3xl font-bold mb-6">Tienes {{total_compra}} producto en tu carrito</h2>
+    {% else %}
+        <h2 class="text-3xl font-bold mb-6">Tienes {{total_compra}} productos en tu carrito</h2>
+    {% endif %}
+    <br>
         <table class="min-w-full bg-white">
             <thead>
                 <tr>
-                    <th class="py-2">Producto</th>
-                    <th class="py-2">Precio</th>
+                   
+                    <th class="py-2 bg-zinc-600 text-white">Producto</th>
+                    <th class="py-2 bg-zinc-600 text-white">Precio</th>
                 </tr>
             </thead>
             <tbody>
                 {% for compra in compras %}
                 <tr>
-                    <td class="border px-4 py-2">{{ compra.nombreCompra }}</td>
-                    <td class="border px-4 py-2">${{ compra.precioCompra }}</td>
+                    
+                    <td class="border px-4 py-2 bg-zinc-300">{{ compra.id }}- {{ compra.nombreCompra }}</td>
+                    <td class="border px-4 py-2 bg-zinc-300">${{ compra.precioCompra }}</td>
                 </tr>
                 {% endfor %}
                 <tr>
-                    <td class="border px-4 py-2 font-bold">Total</td>
-                    <td class="border px-4 py-2 font-bold">${{ total_precio }}</td>
+                    
+                    <td class="border px-4 py-2 bg-zinc-600 text-white font-bold">Total</td>
+                    <td class="border px-4 py-2 font-bold bg-zinc-600 text-white">${{ total_precio }}</td>
                 </tr>
             </tbody>
         </table>
-        <a href="#" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Procesar Compra</a>
+        <br>
+        <div class="flex justify-end">
+            <a href="#" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Procesar Compra</a>
+        </div>
     {% endif %}
 </div>
 {% endblock content %}
