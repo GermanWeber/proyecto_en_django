@@ -1,6 +1,6 @@
 from django import forms
-from .models import Post
-from .models import Compra
+from .models import Post, Compra
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -33,18 +33,7 @@ class UserCreateForm(forms.ModelForm):
 class PostCreateForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = (
-            "title",
-            "content",
-            "marca",
-            "sub_title",
-            "img",
-            "price",
-            "amount",
-            "usuarioID",
-        )
-
-    # usuario = forms.ModelChoiceField(queryset=Usuario.objects.all(), required=True)
+        fields = ["title", "sub_title", "marca", "img", "price", "amount", "content"]
 
 
 class CompraCreateForm(forms.ModelForm):
@@ -56,6 +45,3 @@ class CompraCreateForm(forms.ModelForm):
             "usuarioID",
             "postID",
         )
-
-    # usuario = forms.ModelChoiceField(queryset=Usuario.objects.all(), required=True)
-    # post = forms.ModelChoiceField(queryset=Post.objects.all(), required=True)

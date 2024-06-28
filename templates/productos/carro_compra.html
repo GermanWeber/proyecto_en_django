@@ -1,0 +1,36 @@
+pagina compra
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto mt-8 p-6 bg-white shadow-md rounded-lg">
+    <h2 class="text-3xl font-bold mb-6">Tu Carrito de Compras</h2>
+
+    {% if compras %}
+    <table class="min-w-full bg-white">
+        <thead>
+            <tr>
+                <th class="py-2">Producto</th>
+                <th class="py-2">Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for compra in compras %}
+            <tr>
+                <td class="border px-4 py-2">{{ compra.nombreCompra }}</td>
+                <td class="border px-4 py-2">${{ compra.precioCompra }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td class="border px-4 py-2 font-bold">Total</td>
+                <td class="border px-4 py-2 font-bold">${{ total_precio }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{% url 'procesar_compra' %}" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Procesar Compra</a>
+    {% else %}
+    <p class="text-gray-600">Tu carrito está vacío.</p>
+    {% endif %}
+</div>
+{% endblock content %}
