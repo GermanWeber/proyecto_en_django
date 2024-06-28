@@ -13,6 +13,7 @@ from .views import (
     TusProductos,
     UserUpdateView,
     BlogDetailViewUser,
+    VerCarro,
 )
 
 app_name = "tienda"
@@ -32,4 +33,5 @@ urlpatterns = [
     path(
         "agregar_compra/<int:post_id>/", views.agregar_a_compra, name="agregar_compra"
     ),
+    path("carro-compra/<int:user_id>", VerCarro.as_view(), name="carro"),
 ]

@@ -16,6 +16,12 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
+# ------------------------------------------------------------------------
+# VIEWS DE POSTS
+
+# ver todos los Post (usuario)
+
+
 class TiendaView(View):
     def get(self, request, *args, **kwargs):
         posts = Post.objects.all()
@@ -23,6 +29,9 @@ class TiendaView(View):
             "posts": posts,
         }
         return render(request, "productos\\blog_list_tienda.html", context)
+
+
+# ver todos los Post (creador)
 
 
 class TusProductos(View):
@@ -33,6 +42,9 @@ class TusProductos(View):
             "posts": posts,
         }
         return render(request, "productos\\blog_list_user.html", context)
+
+
+# creacion de Post
 
 
 class BlogCreateView(View):
@@ -52,6 +64,9 @@ class BlogCreateView(View):
         return render(request, "productos\\blog_create.html", context)
 
 
+# ver detalles del Post (vista usuario)
+
+
 class BlogDetailView(View):
     def get(self, request, pk, *args, **kwargs):
         post = get_object_or_404(Post, pk=pk)
@@ -59,11 +74,17 @@ class BlogDetailView(View):
         return render(request, "productos\\blog_detail.html", context)
 
 
+# ver detalles del Post (vista creador)
+
+
 class BlogDetailViewUser(View):
     def get(self, request, pk, *args, **kwargs):
         post = get_object_or_404(Post, pk=pk)
         context = {"post": post}
         return render(request, "productos\\blog_detail_user.html", context)
+
+
+# modificar post
 
 
 class BlogUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -88,6 +109,9 @@ class BlogUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.request.user == post.usuarioID  # Solo el propietario puede editar
 
 
+# eliminar Post
+
+
 class BlogDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     template_name = "productos\\blog_delete.html"
@@ -96,6 +120,12 @@ class BlogDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.usuarioID  # Solo el propietario puede eliminar
+
+
+# ------------------------------------------------------------------------
+# VIEWS DE USERS
+
+# registro de nuevo usuario
 
 
 class UserCreateView(View):
@@ -118,6 +148,9 @@ class UserCreateView(View):
             return render(request, "usuarios\\user_create.html", context)
 
 
+# login de usuario
+
+
 class LoginUser(LoginView):
     template_name = "usuarios\\user_login.html"  # Plantilla para el formulario de login
     redirect_authenticated_user = True  # Redirigir si el usuario ya está autenticado
@@ -130,11 +163,14 @@ class LoginUser(LoginView):
         return self.success_url
 
 
-# salida usuario
+# logout de usuario
 class ExitUser(View):
     def get(self, request, *args, **kwargs):
         logout(request)  # Cierra la sesión del usuario
         return redirect(reverse_lazy("tienda:home"))
+
+
+# modificar usuario
 
 
 class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -153,6 +189,12 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         messages.success(self.request, "Perfil actualizado exitosamente.")
         return super().form_valid(form)
+
+
+# ----------------------------------------------------------------------------------
+# VIEWS DE COMPRAS
+
+# agragar al carro
 
 
 @login_required
@@ -178,3 +220,22 @@ def agregar_a_compra(request, post_id):
         messages.error(request, "El artículo no existe.")
 
     return redirect("tienda:home")
+
+
+# mostrar carro de compras
+
+
+class VerCarro(View):
+    def get(self, request, user_id, *args, **kwargs):
+
+        # Obtener las compras del usuario específico
+        compras = Compra.objects.filter(usuarioID__id=user_id)
+
+        # Calcular el precio total
+        total_precio = sum(compra.precioCompra for compra in compras)
+
+        context = {
+            "compras": compras,
+            "total_precio": total_precio,
+        }
+        return render(request, "productos/carro_compra.html", context)
