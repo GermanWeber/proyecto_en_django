@@ -1,10 +1,25 @@
 {% extends "base.html" %}
 
-{% block content %}
-
-hola, visita mi <a href=" {% url 'tienda:home' %}">Tienda aqui</a>
+ {% block content %}
 
 
+
+ <div class="flex justify-center align-middle">
+    <div class="shadow-md rounded-3xl bg-slate-400 mt-40">
+        <div class="flex justify-center text-3xl font-bold mt-2">
+        <h1>Bienvenido</h1>
+        </div>
+        <img src="media\images\logo.png" alt="logo">
+
+        <a href="{% url 'tienda:home' %}" style="text-decoration: none; color: inherit;">
+        <div class="flex justify-center">         
+            <button type="button" 
+                    class="group relative w-full flex justify-center py-4 px-4 border border-transparent font-bold text-sm rounded-md text-indigo-600 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">                   
+                    ENTRA AQUI</button>
+        </div>
+        </a>      
+    </div>
+ </div>
 
 
 {% endblock content %}

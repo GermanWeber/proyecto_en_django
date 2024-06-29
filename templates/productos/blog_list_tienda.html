@@ -16,7 +16,7 @@
           {% if post.img %}
           <img class="h-48 w-full object-cover md:h-full md:w-48" src="{{ post.img.url }}" alt="Imagen de {{ post.title }}">
           {% else %}
-          <img class="h-48 w-full object-cover md:h-full md:w-48" src="{% static 'default_image.jpg' %}" alt="Imagen por defecto">
+          <img class="h-48 w-full object-cover md:h-full md:w-48" src="{% static 'media\images\no-img.png' %}" alt="Imagen por defecto">
           {% endif %}
         </div>
 

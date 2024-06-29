@@ -8,7 +8,7 @@ class Post(models.Model):
     sub_title = models.CharField(max_length=200, blank=True, null=True)
     marca = models.CharField(max_length=100)
     img = models.ImageField(upload_to="posts/", blank=True, null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.IntegerField(null=False)
     amount = models.PositiveIntegerField()
     content = models.TextField()
     usuarioID = models.ForeignKey(User, on_delete=models.CASCADE)

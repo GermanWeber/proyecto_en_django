@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block content %}
-<div class="container rounded-lg shadow-lg bg-white mx-auto p-4">
+<div class="container rounded-lg shadow-lg bg-white mx-auto p-4 mt-4">
     <div class="  p-6 flex">
         <!-- Imagen del Post -->
         <div class="w-1/3">
             {% if post.img %}
                 <img class="w-full h-auto object-cover rounded-lg" src="{{ post.img.url }}" alt="{{ post.title }}">
             {% else %}
-                <img class="w-full h-auto object-cover rounded-lg" src="{% static 'default_image.jpg' %}" alt="Imagen predeterminada">
+                <img class="w-full h-auto object-cover rounded-lg" src="{% static 'media\images\no-img.png' %}" alt="Imagen predeterminada">
             {% endif %}
         </div>
 
@@ -32,22 +32,27 @@
 
             <!-- Botones de Acción -->
              <br>
-             <br>
-            <form action="{% url 'tienda:agregar_compra' post.id %}" method="POST">
-                {% csrf_token %}
-                {% if user.is_authenticated %}
-                    <button type="submit" class="flex items-center bg-yellow-700 hover:bg-yellow-300 text-black font-bold py-2 px-4 rounded mb-4">
-                        <img class="w-5 h-5 rounded-full" src="/media/images/carro.png" alt="img carro">
-                        <span class="ml-2">Agregar al Carrito</span>
-                    </button>
-                {% else %}
-                    <h5 class="text-red-600">Debes iniciar sesión para comprar, <a class="text-blue-600 hover:text-blue-800 font-bold" href="{% url 'tienda:login' %}">Inicia sesión aquí</a></h5>
-                {% endif %}
-            </form>
+             <div class="space-x-4 mb-4 ">
+                <form action="{% url 'tienda:agregar_compra' post.id %}" method="POST">
+                    {% csrf_token %}
+                    {% if user.is_authenticated %}
+                        <button type="submit" class="flex items-center bg-yellow-400 hover:bg-yellow-600 text-black font-bold  py-2 px-4 rounded mb-4">
+                            <img class="w-5 h-5 rounded-full" src="/media/images/carro.png" alt="img carro">
+                            <span class="ml-2">Agregar al Carrito</span>
+                        </button>
+                    {% else %}
+                        <h5 class="text-red-600">Debes iniciar sesión para comprar, <a class="text-blue-600 hover:text-blue-800 font-bold" href="{% url 'tienda:login' %}">Inicia sesión aquí</a></h5>
+                    {% endif %}
+                </form>
+            
+                </div> 
+            
 
             
         </div>
     </div>
+    
+
     <a href="javascript:history.back()" class="text-blue-500 hover:text-blue-700">
         &larr; Atrás
     </a>

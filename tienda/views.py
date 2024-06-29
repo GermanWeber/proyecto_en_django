@@ -122,7 +122,7 @@ class BlogDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user == post.usuarioID  # Solo el propietario puede eliminar
 
 
-# ------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 # VIEWS DE USERS
 
 # registro de nuevo usuario
