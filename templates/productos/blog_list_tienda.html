@@ -4,6 +4,7 @@
 {% block content %}
 
 <!-- Bucle para mostrar los posts -->
+ <div class="mt-32">
 {% for post in posts %}
 <div class="container mx-auto mt-4">
   
@@ -33,6 +34,7 @@
 
 </div>  
 {% endfor %}
+</div>
 
 {% if not posts %}
     <p class="text-center text-gray-600 mt-8">No hay publicaciones.</p>

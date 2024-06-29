@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<div class="container mx-auto mt-8 p-6 bg-white shadow-md rounded-lg">
+<div class="container mx-auto mt-32 p-6 bg-white shadow-md rounded-lg">
     <h2 class="text-3xl font-bold mb-6">Tu Carrito de Compras</h2>
 
     {% if not compras %}
@@ -29,7 +29,8 @@
                     <tr>
                         
                         <td class="border px-0  py-2 bg-zinc-300">- {{ compra.nombreCompra }}</td>
-                        <td class="border px-0 py-2 bg-zinc-300">${{ compra.precioCompra }}</td>
+                        <td class="flex justify-between border px-0 py-2 bg-zinc-300">${{ compra.precioCompra }} <a href="{% url 'tienda:delete_carro' compra.id %}" class="text-red-600 hover:text-red-800 font-bold">Eliminar</a></td>
+                        
                     </tr>
                     {% endfor %}
                     <tr>

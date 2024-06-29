@@ -2,7 +2,9 @@
 {% load static %}
 
 {% block content %}
-<div class="container rounded-lg shadow-lg bg-white mx-auto p-4 mt-4">
+<div class="container rounded-lg shadow-lg bg-white mx-auto p-4 mt-32">
+
+    
     <div class="  p-6 flex">
         <!-- Imagen del Post -->
         <div class="w-1/3">
@@ -53,7 +55,7 @@
             </button>
         </a>
     </div>
-    <a href="javascript:history.back()" class="text-blue-500 hover:text-blue-700">
+    <a href="{% url "tienda:home" %}" class="text-blue-500 hover:text-blue-700">
         &larr; Atrás
     </a>
 </div>

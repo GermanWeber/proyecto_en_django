@@ -240,4 +240,17 @@ class VerCarro(View):
             "total_precio": total_precio,
             "total_compra": total_compra,
         }
-        return render(request, "productos/carro_compra.html", context)
+        return render(request, "compras/carro_compra.html", context)
+
+
+class BorrarProductoCarro(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Compra
+    template_name = "compras/carro_delete.html"
+
+    def get_success_url(self):
+        compra = self.get_object()
+        return reverse_lazy("tienda:carro", kwargs={"user_id": compra.usuarioID.id})
+
+    def test_func(self):
+        compra = self.get_object()
+        return self.request.user == compra.usuarioID

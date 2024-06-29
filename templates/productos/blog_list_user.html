@@ -4,7 +4,9 @@
 {% block content %}
 
 <!-- Contenedor principal -->
-<div class="container mx-auto mt-8 p-6 bg-gray-100 shadow-md rounded-lg">
+<div class="container mx-auto mt-32 p-6 bg-gray-100 shadow-md rounded-lg">
+
+    <h2 class="text-3xl font-bold mb-6">Tus Posts</h2>
 
     <!-- Botón para crear un nuevo artículo -->
     <div class="text-right mb-6">
@@ -27,7 +29,7 @@
                         {% if post.img %}
                         <img class="h-48 w-full object-cover md:h-full md:w-48" src="{{ post.img.url }}" alt="Imagen de {{ post.title }}">
                         {% else %}
-                        <img class="h-48 w-full object-cover md:h-full md:w-48" src="{% static 'default_image.jpg' %}" alt="Imagen por defecto">
+                        <img class="h-48 w-full object-cover md:h-full md:w-48" src="{% static 'media\images\no-img.png' %}" alt="Imagen por defecto">
                         {% endif %}
                     </div>
 
