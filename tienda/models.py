@@ -27,3 +27,13 @@ class Compra(models.Model):
     usuarioID = models.ForeignKey(User, on_delete=models.CASCADE)
 
     postID = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+
+# tabla transaccion
+class TransaccionCompra(models.Model):
+
+    totalCompra = models.IntegerField(default=0, null=False)
+    cantidadCompra = models.IntegerField(default=0, null=False)
+
+    # clave_foranea
+    usuarioID = models.ForeignKey(User, on_delete=models.CASCADE)

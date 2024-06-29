@@ -15,36 +15,48 @@
         <h2 class="text-3xl font-bold mb-6">Tienes {{total_compra}} productos en tu carrito</h2>
     {% endif %}
     <br>
-        <div class="bg-zinc-600 p-3 border-emerald-500">
-            <table class="min-w-full ">
-                <thead>
-                    <tr>
-                    
-                        <th class=" py-2 bg-zinc-600 text-white">Producto</th>
-                        <th class=" py-2 bg-zinc-600 text-white">Precio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for compra in compras %}
-                    <tr>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300">
+            <thead class="bg-gray-700 text-white">
+                <tr>
+                    <th class="py-2 px-4 text-left" style="width: 300px;">Producto</th>
+                    <th class="py-2 px-4 text-left" style="width: 100px;">Precio</th>
+                    <th class="py-2 px-4 text-left" style="width: 100px;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for compra in compras %}
+                <tr class="border-b border-gray-200">
+                    <td class="py-2 px-4" style="width: 300px;">{{ compra.nombreCompra }}</td>
+                    <td class="py-2 px-4" style="width: 100px;">${{ compra.precioCompra }}</td>
+                    <td class="py-2 px-4" style="width: 100px;">
+                        <div class="flex justify-center">
+                            <a href="{% url 'tienda:delete_carro' compra.id %}" class="text-red-600 hover:text-red-800 font-bold">Eliminar</a>
+                        </div>
                         
-                        <td class="border px-0  py-2 bg-zinc-300">- {{ compra.nombreCompra }}</td>
-                        <td class="flex justify-between border px-0 py-2 bg-zinc-300">${{ compra.precioCompra }} <a href="{% url 'tienda:delete_carro' compra.id %}" class="text-red-600 hover:text-red-800 font-bold">Eliminar</a></td>
-                        
-                    </tr>
-                    {% endfor %}
-                    <tr>
-                        
-                        <td class="border px-0 py-2 bg-zinc-600 text-white font-bold">Total</td>
-                        <td class="border px-0 py-2 font-bold bg-zinc-600 text-white">${{ total_precio }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <br>
-        <div class="flex justify-end">
-            <a href="#" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Procesar Compra</a>
-        </div>
-    {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr class="border-t-2 border-gray-300 bg-gray-100">
+                    <td class="py-2 px-4 font-bold" >Total</td>
+                    <td class="py-2 px-4 font-bold">${{ total_precio }}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form action="{% url 'tienda:procesar_compra' %}" method="POST" class="flex justify-end mt-4">
+        {% csrf_token %}
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Procesar Compra
+        </button>
+    </form>
+
+{% endif %}
+<br>
+<a href="javascript:history.back()" class="text-blue-500 hover:text-blue-700">
+    &larr; Atrás
+</a>
 </div>
 {% endblock content %}

@@ -27,7 +27,7 @@
       <img class="w-5 h-5 rounded-full" src="/media/images/carroBlanco2.png" alt=" img carro">
       </a>
 
-      <a href="{% url 'tienda:userUpdate' user.pk %}">
+      <a href="{% url 'tienda:usuario_detalle' user.pk %}">
         <button type="button" class="flex items-center text-sm ml-4 bg-gray-800 text-white font-bold  py-2 px-4 rounded" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
             <img class="w-5 h-5 rounded-full" src="/media/images/usuario.png" alt="User Avatar">
             <span class="ml-2">{{ user.username  }}</span>

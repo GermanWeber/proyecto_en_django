@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import View, UpdateView, DeleteView
-from .forms import PostCreateForm, CompraCreateForm, UserCreateForm
+from django.views.generic import View, UpdateView, DeleteView, ListView, DetailView
+from .forms import PostCreateForm, UserCreateForm, TransaccionCompra
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
@@ -179,8 +179,9 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = "usuarios\\user_update.html"
 
     def get_success_url(self):
+        pk = self.kwargs["pk"]
         messages.success(self.request, "Tu perfil ha sido actualizado con éxito.")
-        return reverse_lazy("tienda:home")
+        return reverse_lazy("tienda:usuario_detalle", kwargs={"pk": pk})
 
     def test_func(self):
         user = self.get_object()
@@ -189,6 +190,21 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         messages.success(self.request, "Perfil actualizado exitosamente.")
         return super().form_valid(form)
+
+
+# ver detalles de usuario
+
+
+class UsuarioDetalleView(DetailView):
+    model = User
+    template_name = "usuarios\\user_detail.html"
+    context_object_name = "usuario"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        usuario = self.get_object()
+        context["transacciones"] = TransaccionCompra.objects.filter(usuarioID=usuario)
+        return context
 
 
 # ----------------------------------------------------------------------------------
@@ -254,3 +270,39 @@ class BorrarProductoCarro(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         compra = self.get_object()
         return self.request.user == compra.usuarioID
+
+
+class ProcesarCompra(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        # Obtener todas las compras del usuario
+        compras = Compra.objects.filter(usuarioID=request.user)
+
+        if not compras:
+            return redirect("tienda:carro", user_id=request.user.id)
+
+        usuario = request.user
+        total_compra = sum(compra.precioCompra for compra in compras)
+        cantidad = compras.count()
+
+        # Crear una nueva transacción
+        nueva_transaccion = TransaccionCompra(
+            totalCompra=total_compra,
+            cantidadCompra=cantidad,
+            usuarioID=usuario,
+        )
+        nueva_transaccion.save()
+
+        # Eliminar todas las compras después de procesarlas
+        compras.delete()
+
+        # Redirigir al historial de transacciones o a una página de confirmación
+        return redirect("tienda:historial_transacciones")
+
+
+class HistorialTransacciones(LoginRequiredMixin, ListView):
+    model = TransaccionCompra
+    template_name = "compras\historial_compra.html.html"
+    context_object_name = "transacciones"
+
+    def get_queryset(self):
+        return TransaccionCompra.objects.filter(usuarioID=self.request.user)

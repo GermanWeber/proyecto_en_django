@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Compra
+from .models import Post, Compra, TransaccionCompra
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -44,4 +44,14 @@ class CompraCreateForm(forms.ModelForm):
             "precioCompra",
             "usuarioID",
             "postID",
+        )
+
+
+class TransaccionCreateForm(forms.ModelForm):
+    class Meta:
+        model = TransaccionCompra
+        fields = (
+            "totalCompra",
+            "cantidadCompra",
+            "usuarioID",
         )
