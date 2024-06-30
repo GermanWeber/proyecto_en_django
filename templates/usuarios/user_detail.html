@@ -24,16 +24,16 @@
                     <th class="py-2 px-4 text-left">ID de Transacción</th>
                     <th class="py-2 px-4 text-left">Total Compra</th>
                     <th class="py-2 px-4 text-left">Cantidad</th>
-                    <th class="py-2 px-4 text-left">Fecha</th>
+                   
                 </tr>
             </thead>
             <tbody>
                 {% for transaccion in transacciones %}
                 <tr class="border-b border-gray-200">
-                    <td class="py-2 px-4">{{ transaccion.id }}</td>
-                    <td class="py-2 px-4">${{ transaccion.totalCompra }}</td>
-                    <td class="py-2 px-4">{{ transaccion.cantidadCompra }}</td>
-                    <td class="py-2 px-4">{{ transaccion.created_at }}</td> <!-- Asumiendo que tienes un campo created_at en tu modelo -->
+                    <td class="py-2 px-4 text-center">{{ transaccion.id }}</td>
+                    <td class="py-2 px-4 text-center">${{ transaccion.totalCompra }}</td>
+                    <td class="py-2 px-4 text-center">{{ transaccion.cantidadCompra }}</td>
+                    
                 </tr>
                 {% endfor %}
             </tbody>

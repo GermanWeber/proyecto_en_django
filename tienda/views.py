@@ -292,6 +292,20 @@ class ProcesarCompra(LoginRequiredMixin, View):
         )
         nueva_transaccion.save()
 
+        # Reducir la cantidad de cada Post según la compra
+        for compra in compras:
+            post = (
+                compra.postID
+            )  # Suponiendo que cada Compra tiene una referencia a un Post
+            if (
+                post.amount >= 1
+            ):  # Asegurarse de que hay suficiente cantidad para decrementar
+                post.amount -= 1
+                post.save()
+            else:
+                messages.error(request, f"No hay suficiente stock para {post.title}.")
+                return redirect("tienda:carro", user_id=request.user.id)
+
         # Eliminar todas las compras después de procesarlas
         compras.delete()
 
@@ -301,7 +315,7 @@ class ProcesarCompra(LoginRequiredMixin, View):
 
 class HistorialTransacciones(LoginRequiredMixin, ListView):
     model = TransaccionCompra
-    template_name = "compras\historial_compra.html.html"
+    template_name = "compras\\historial_compra.html"
     context_object_name = "transacciones"
 
     def get_queryset(self):
