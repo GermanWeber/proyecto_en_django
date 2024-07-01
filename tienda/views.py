@@ -290,7 +290,7 @@ class ProcesarCompra(LoginRequiredMixin, View):
             cantidadCompra=cantidad,
             usuarioID=usuario,
         )
-        nueva_transaccion.save()
+        # nueva_transaccion.save()
 
         # Reducir la cantidad de cada Post según la compra
         for compra in compras:
@@ -301,13 +301,16 @@ class ProcesarCompra(LoginRequiredMixin, View):
                 post.amount >= 1
             ):  # Asegurarse de que hay suficiente cantidad para decrementar
                 post.amount -= 1
+
                 post.save()
+                nueva_transaccion.save()
+                compras.delete()
             else:
                 messages.error(request, f"No hay suficiente stock para {post.title}.")
                 return redirect("tienda:carro", user_id=request.user.id)
 
         # Eliminar todas las compras después de procesarlas
-        compras.delete()
+        # compras.delete()
 
         # Redirigir al historial de transacciones o a una página de confirmación
         return redirect("tienda:historial_transacciones")
