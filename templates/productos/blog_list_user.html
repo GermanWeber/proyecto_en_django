@@ -20,7 +20,7 @@
     <!-- mostrar los posts -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
         {% for post in posts %}
-        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:scale-105 hover:shadow-2xl">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl">
             <a href="{% url 'tienda:detailUser' post.id %}">
                 <div class="md:flex">
                     
