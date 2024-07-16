@@ -38,7 +38,7 @@ class TransaccionCompra(models.Model):
 
     totalCompra = models.PositiveIntegerField(default=0)
     cantidadCompra = models.PositiveIntegerField(default=0)
-
+    fecha = models.DateTimeField(auto_now_add=True)
     # clave_foranea
     usuarioID = models.ForeignKey(User, on_delete=models.CASCADE)
 
