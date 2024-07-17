@@ -43,4 +43,4 @@ class TransaccionCompra(models.Model):
     usuarioID = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Transacción {self.id} ({self.fechaTran})"
+        return f"Transacción {self.id} ({self.fecha})"
